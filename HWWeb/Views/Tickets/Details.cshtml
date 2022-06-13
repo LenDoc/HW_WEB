@@ -1,0 +1,58 @@
+﻿@model HWWeb.Models.Ticket
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Ticket</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Seat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Seat)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AvailabilityBenefits)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AvailabilityBenefits)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Passenger.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Passenger.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Trip.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Trip.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TicketID }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

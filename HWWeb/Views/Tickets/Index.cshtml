@@ -1,0 +1,138 @@
+﻿@model IEnumerable<HWWeb.Models.Ticket>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Tickets</h2>
+@if (TempData["InfoMessage"] != null)
+{
+    <div class="alert alert-info">
+        <strong>
+            Information!
+        </strong>
+        @TempData["InfoMessage"]
+        <button type="button" class="close" data-dismiss="alert" arial-label="Close">
+            <span>
+                &times;
+            </span>
+        </button>
+    </div>
+}
+else if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>
+            Success!
+        </strong>
+        @TempData["SuccessMessage"]
+        <button type="button" class="close"
+                data-dismiss="alert" arial-label="Close">
+            <span>
+                &times;
+            </span>
+        </button>
+    </div>
+}
+else if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>
+            Error!
+        </strong>
+        @TempData["ErrorMessage"]
+        <button type="button" class="close"
+                data-dismiss="alert" arial-label="Close">
+            <span>
+                &times;
+            </span>
+        </button>
+    </div>
+}
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+    <div>
+        @using (Html.BeginForm("Index", "Tickets", FormMethod.Get))
+        {
+            <table>
+                <tr>
+                    <td>
+                        <span>
+                            <b>Search By:</b>
+                            @Html.RadioButton("searchBy", "Seat", true)
+                            <text> Seat </text>
+                            @Html.RadioButton("searchBy", "AvailabilityBenefits")
+                            <text> AvailabilityBenefits </text>
+                            @Html.RadioButton("searchBy", "Price")
+                            <text> Price </text>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.TextBox("searchValue", null, new
+                        {
+                            Class = "form-control",
+                   placeholder = "Enter what you want to search"
+                   })
+                    </td>
+                    <td>
+                        &nbsp;
+                    </td>
+                    <td>
+                        <input type="submit" value="Search" class="btn btn-success" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+<br />
+<br />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Seat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AvailabilityBenefits)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Passenger.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Trip.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Seat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailabilityBenefits)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Passenger.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Trip.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.TicketID }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.TicketID }, new { @class = "btn btn-success" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.TicketID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

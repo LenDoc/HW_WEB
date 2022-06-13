@@ -1,0 +1,145 @@
+﻿@model IEnumerable<HWWeb.Models.Trip>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Trips</h2>
+@if (TempData["InfoMessage"] != null)
+{
+    <div class="alert alert-info">
+        <strong>
+            Information!
+        </strong>
+        @TempData["InfoMessage"]
+        <button type="button" class="close" data-dismiss="alert" arial-label="Close">
+            <span>
+                &times;
+            </span>
+        </button>
+    </div>
+}
+else if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>
+            Success!
+        </strong>
+        @TempData["SuccessMessage"]
+        <button type="button" class="close"
+                data-dismiss="alert" arial-label="Close">
+            <span>
+                &times;
+            </span>
+        </button>
+    </div>
+}
+else if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        <strong>
+            Error!
+        </strong>
+        @TempData["ErrorMessage"]
+        <button type="button" class="close"
+                data-dismiss="alert" arial-label="Close">
+            <span>
+                &times;
+            </span>
+        </button>
+    </div>
+}
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+<div>
+    @using (Html.BeginForm("Index", "Trips", FormMethod.Get))
+    {
+        <table>
+            <tr>
+                <td>
+                    <span>
+                        <b>Search By:</b>
+                        @Html.RadioButton("searchBy", "Name", true)
+                        <text> Name </text>
+                        @Html.RadioButton("searchBy", "Distance")
+                        <text> Distance </text>
+                    
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.TextBox("searchValue", null, new
+                    {
+                        Class = "form-control",
+               placeholder = "Enter what you want to search"
+               })
+                </td>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                    <input type="submit" value="Search" class="btn btn-success" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+<br />
+<br />
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Distance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DatetimeDeparture)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DatetimeArrival)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Station.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Train.Type)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Distance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatetimeDeparture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatetimeArrival)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Station.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Train.Type)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.TripID }, new { @class = "btn btn-primary" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.TripID }, new { @class = "btn btn-success" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.TripID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

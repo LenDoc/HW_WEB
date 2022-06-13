@@ -1,0 +1,34 @@
+﻿@model HWWeb.Models.RailwayCarriage
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details  </h2>
+
+<div>
+    <h4>RailwayCarriage</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberSeats)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumberSeats)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RailwayCarriageID }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,66 @@
+﻿@model HWWeb.Models.Trip
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Trip</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Distance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Distance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DatetimeDeparture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DatetimeDeparture)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DatetimeArrival)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DatetimeArrival)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Station.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Station.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Train.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Train.Type)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TripID }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

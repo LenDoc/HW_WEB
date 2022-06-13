@@ -1,0 +1,457 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CompositionWagons">
+          <Key>
+            <PropertyRef Name="CompositionWagonsID" />
+          </Key>
+          <Property Name="CompositionWagonsID" Type="int" Nullable="false" />
+          <Property Name="RailwayCarriageID" Type="int" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Passenger">
+          <Key>
+            <PropertyRef Name="PassengerID" />
+          </Key>
+          <Property Name="PassengerID" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RailwayCarriage">
+          <Key>
+            <PropertyRef Name="RailwayCarriageID" />
+          </Key>
+          <Property Name="RailwayCarriageID" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="NumberSeats" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="StationID" />
+          </Key>
+          <Property Name="StationID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="TicketID" />
+          </Key>
+          <Property Name="TicketID" Type="int" Nullable="false" />
+          <Property Name="TripID" Type="int" Nullable="false" />
+          <Property Name="PassengerID" Type="int" Nullable="false" />
+          <Property Name="Seat" Type="int" Nullable="false" />
+          <Property Name="AvailabilityBenefits" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Train">
+          <Key>
+            <PropertyRef Name="TrainID" />
+          </Key>
+          <Property Name="TrainID" Type="int" Nullable="false" />
+          <Property Name="CompositionWagonsID" Type="int" Nullable="false" />
+          <Property Name="Type" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="TripID" />
+          </Key>
+          <Property Name="TripID" Type="int" Nullable="false" />
+          <Property Name="StationID" Type="int" Nullable="false" />
+          <Property Name="TrainID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Distance" Type="int" Nullable="false" />
+          <Property Name="DatetimeDeparture" Type="datetime" Nullable="false" />
+          <Property Name="DatetimeArrival" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__Compositi__Railw__0D44F85C">
+          <End Role="RailwayCarriage" Type="Self.RailwayCarriage" Multiplicity="1" />
+          <End Role="CompositionWagons" Type="Self.CompositionWagons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RailwayCarriage">
+              <PropertyRef Name="RailwayCarriageID" />
+            </Principal>
+            <Dependent Role="CompositionWagons">
+              <PropertyRef Name="RailwayCarriageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ticket__Passenge__2DB1C7EE">
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passenger">
+              <PropertyRef Name="PassengerID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="PassengerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ticket__TripID__2CBDA3B5">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="TripID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="TripID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Train__Compositi__1B9317B3">
+          <End Role="CompositionWagons" Type="Self.CompositionWagons" Multiplicity="1" />
+          <End Role="Train" Type="Self.Train" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompositionWagons">
+              <PropertyRef Name="CompositionWagonsID" />
+            </Principal>
+            <Dependent Role="Train">
+              <PropertyRef Name="CompositionWagonsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trip__StationID__2057CCD0">
+          <End Role="Station" Type="Self.Station" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="StationID" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="StationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trip__TrainID__214BF109">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="TrainID" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="TrainID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="CompositionWagons" EntityType="Self.CompositionWagons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Passenger" EntityType="Self.Passenger" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RailwayCarriage" EntityType="Self.RailwayCarriage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Station" EntityType="Self.Station" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Train" EntityType="Self.Train" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trip" EntityType="Self.Trip" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Compositi__Railw__0D44F85C" Association="Self.FK__Compositi__Railw__0D44F85C">
+            <End Role="RailwayCarriage" EntitySet="RailwayCarriage" />
+            <End Role="CompositionWagons" EntitySet="CompositionWagons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ticket__Passenge__2DB1C7EE" Association="Self.FK__Ticket__Passenge__2DB1C7EE">
+            <End Role="Passenger" EntitySet="Passenger" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ticket__TripID__2CBDA3B5" Association="Self.FK__Ticket__TripID__2CBDA3B5">
+            <End Role="Trip" EntitySet="Trip" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Train__Compositi__1B9317B3" Association="Self.FK__Train__Compositi__1B9317B3">
+            <End Role="CompositionWagons" EntitySet="CompositionWagons" />
+            <End Role="Train" EntitySet="Train" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trip__StationID__2057CCD0" Association="Self.FK__Trip__StationID__2057CCD0">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Trip" EntitySet="Trip" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trip__TrainID__214BF109" Association="Self.FK__Trip__TrainID__214BF109">
+            <End Role="Train" EntitySet="Train" />
+            <End Role="Trip" EntitySet="Trip" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CompositionWagons">
+          <Key>
+            <PropertyRef Name="CompositionWagonsID" />
+          </Key>
+          <Property Name="CompositionWagonsID" Type="Int32" Nullable="false" />
+          <Property Name="RailwayCarriageID" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="RailwayCarriage" Relationship="Self.FK__Compositi__Railw__0D44F85C" FromRole="CompositionWagons" ToRole="RailwayCarriage" />
+          <NavigationProperty Name="Train" Relationship="Self.FK__Train__Compositi__1B9317B3" FromRole="CompositionWagons" ToRole="Train" />
+        </EntityType>
+        <EntityType Name="Passenger">
+          <Key>
+            <PropertyRef Name="PassengerID" />
+          </Key>
+          <Property Name="PassengerID" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK__Ticket__Passenge__2DB1C7EE" FromRole="Passenger" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="RailwayCarriage">
+          <Key>
+            <PropertyRef Name="RailwayCarriageID" />
+          </Key>
+          <Property Name="RailwayCarriageID" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NumberSeats" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CompositionWagons" Relationship="Self.FK__Compositi__Railw__0D44F85C" FromRole="RailwayCarriage" ToRole="CompositionWagons" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="StationID" />
+          </Key>
+          <Property Name="StationID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Trip" Relationship="Self.FK__Trip__StationID__2057CCD0" FromRole="Station" ToRole="Trip" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="TicketID" />
+          </Key>
+          <Property Name="TicketID" Type="Int32" Nullable="false" />
+          <Property Name="TripID" Type="Int32" Nullable="false" />
+          <Property Name="PassengerID" Type="Int32" Nullable="false" />
+          <Property Name="Seat" Type="Int32" Nullable="false" />
+          <Property Name="AvailabilityBenefits" Type="String" MaxLength="40" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Passenger" Relationship="Self.FK__Ticket__Passenge__2DB1C7EE" FromRole="Ticket" ToRole="Passenger" />
+          <NavigationProperty Name="Trip" Relationship="Self.FK__Ticket__TripID__2CBDA3B5" FromRole="Ticket" ToRole="Trip" />
+        </EntityType>
+        <EntityType Name="Train">
+          <Key>
+            <PropertyRef Name="TrainID" />
+          </Key>
+          <Property Name="TrainID" Type="Int32" Nullable="false" />
+          <Property Name="CompositionWagonsID" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CompositionWagons" Relationship="Self.FK__Train__Compositi__1B9317B3" FromRole="Train" ToRole="CompositionWagons" />
+          <NavigationProperty Name="Trip" Relationship="Self.FK__Trip__TrainID__214BF109" FromRole="Train" ToRole="Trip" />
+        </EntityType>
+        <EntityType Name="Trip">
+          <Key>
+            <PropertyRef Name="TripID" />
+          </Key>
+          <Property Name="TripID" Type="Int32" Nullable="false" />
+          <Property Name="StationID" Type="Int32" Nullable="false" />
+          <Property Name="TrainID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Distance" Type="Int32" Nullable="false" />
+          <Property Name="DatetimeDeparture" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DatetimeArrival" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Station" Relationship="Self.FK__Trip__StationID__2057CCD0" FromRole="Trip" ToRole="Station" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK__Ticket__TripID__2CBDA3B5" FromRole="Trip" ToRole="Ticket" />
+          <NavigationProperty Name="Train" Relationship="Self.FK__Trip__TrainID__214BF109" FromRole="Trip" ToRole="Train" />
+        </EntityType>
+        <Association Name="FK__Compositi__Railw__0D44F85C">
+          <End Role="RailwayCarriage" Type="Self.RailwayCarriage" Multiplicity="1" />
+          <End Role="CompositionWagons" Type="Self.CompositionWagons" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RailwayCarriage">
+              <PropertyRef Name="RailwayCarriageID" />
+            </Principal>
+            <Dependent Role="CompositionWagons">
+              <PropertyRef Name="RailwayCarriageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Train__Compositi__1B9317B3">
+          <End Role="CompositionWagons" Type="Self.CompositionWagons" Multiplicity="1" />
+          <End Role="Train" Type="Self.Train" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompositionWagons">
+              <PropertyRef Name="CompositionWagonsID" />
+            </Principal>
+            <Dependent Role="Train">
+              <PropertyRef Name="CompositionWagonsID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ticket__Passenge__2DB1C7EE">
+          <End Role="Passenger" Type="Self.Passenger" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Passenger">
+              <PropertyRef Name="PassengerID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="PassengerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trip__StationID__2057CCD0">
+          <End Role="Station" Type="Self.Station" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="StationID" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="StationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ticket__TripID__2CBDA3B5">
+          <End Role="Trip" Type="Self.Trip" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trip">
+              <PropertyRef Name="TripID" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="TripID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Trip__TrainID__214BF109">
+          <End Role="Train" Type="Self.Train" Multiplicity="1" />
+          <End Role="Trip" Type="Self.Trip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="TrainID" />
+            </Principal>
+            <Dependent Role="Trip">
+              <PropertyRef Name="TrainID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CompositionWagons" EntityType="Self.CompositionWagons" />
+          <EntitySet Name="Passenger" EntityType="Self.Passenger" />
+          <EntitySet Name="RailwayCarriage" EntityType="Self.RailwayCarriage" />
+          <EntitySet Name="Station" EntityType="Self.Station" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" />
+          <EntitySet Name="Train" EntityType="Self.Train" />
+          <EntitySet Name="Trip" EntityType="Self.Trip" />
+          <AssociationSet Name="FK__Compositi__Railw__0D44F85C" Association="Self.FK__Compositi__Railw__0D44F85C">
+            <End Role="RailwayCarriage" EntitySet="RailwayCarriage" />
+            <End Role="CompositionWagons" EntitySet="CompositionWagons" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Train__Compositi__1B9317B3" Association="Self.FK__Train__Compositi__1B9317B3">
+            <End Role="CompositionWagons" EntitySet="CompositionWagons" />
+            <End Role="Train" EntitySet="Train" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ticket__Passenge__2DB1C7EE" Association="Self.FK__Ticket__Passenge__2DB1C7EE">
+            <End Role="Passenger" EntitySet="Passenger" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trip__StationID__2057CCD0" Association="Self.FK__Trip__StationID__2057CCD0">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Trip" EntitySet="Trip" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ticket__TripID__2CBDA3B5" Association="Self.FK__Ticket__TripID__2CBDA3B5">
+            <End Role="Trip" EntitySet="Trip" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Trip__TrainID__214BF109" Association="Self.FK__Trip__TrainID__214BF109">
+            <End Role="Train" EntitySet="Train" />
+            <End Role="Trip" EntitySet="Trip" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="CompositionWagons">
+            <EntityTypeMapping TypeName="Model.CompositionWagons">
+              <MappingFragment StoreEntitySet="CompositionWagons">
+                <ScalarProperty Name="CompositionWagonsID" ColumnName="CompositionWagonsID" />
+                <ScalarProperty Name="RailwayCarriageID" ColumnName="RailwayCarriageID" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Passenger">
+            <EntityTypeMapping TypeName="Model.Passenger">
+              <MappingFragment StoreEntitySet="Passenger">
+                <ScalarProperty Name="PassengerID" ColumnName="PassengerID" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RailwayCarriage">
+            <EntityTypeMapping TypeName="Model.RailwayCarriage">
+              <MappingFragment StoreEntitySet="RailwayCarriage">
+                <ScalarProperty Name="RailwayCarriageID" ColumnName="RailwayCarriageID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="NumberSeats" ColumnName="NumberSeats" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Station">
+            <EntityTypeMapping TypeName="Model.Station">
+              <MappingFragment StoreEntitySet="Station">
+                <ScalarProperty Name="StationID" ColumnName="StationID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket">
+            <EntityTypeMapping TypeName="Model.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="TicketID" ColumnName="TicketID" />
+                <ScalarProperty Name="TripID" ColumnName="TripID" />
+                <ScalarProperty Name="PassengerID" ColumnName="PassengerID" />
+                <ScalarProperty Name="Seat" ColumnName="Seat" />
+                <ScalarProperty Name="AvailabilityBenefits" ColumnName="AvailabilityBenefits" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Train">
+            <EntityTypeMapping TypeName="Model.Train">
+              <MappingFragment StoreEntitySet="Train">
+                <ScalarProperty Name="TrainID" ColumnName="TrainID" />
+                <ScalarProperty Name="CompositionWagonsID" ColumnName="CompositionWagonsID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trip">
+            <EntityTypeMapping TypeName="Model.Trip">
+              <MappingFragment StoreEntitySet="Trip">
+                <ScalarProperty Name="TripID" ColumnName="TripID" />
+                <ScalarProperty Name="StationID" ColumnName="StationID" />
+                <ScalarProperty Name="TrainID" ColumnName="TrainID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Distance" ColumnName="Distance" />
+                <ScalarProperty Name="DatetimeDeparture" ColumnName="DatetimeDeparture" />
+                <ScalarProperty Name="DatetimeArrival" ColumnName="DatetimeArrival" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
